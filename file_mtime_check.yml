@@ -1,0 +1,7 @@
+- name: Mtime check
+  hosts: test
+  tasks:
+    - shell: stat -c '%y' {{ file }}
+      register: sr
+    - debug:
+        var: sr.stdout
