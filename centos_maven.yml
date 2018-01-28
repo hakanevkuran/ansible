@@ -1,0 +1,27 @@
+- name: maven
+  hosts: Test
+
+  tasks:
+    - name: wget  jdk
+      get_url:
+        url: http://mirror.olnevhost.net/pub/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz
+        dest: /home/
+
+    - name: Unzip  tar.gz
+      unarchive:
+        src: /home/apache-maven-3.0.5-bin.tar.gz
+        dest: /home
+
+    - name: Edit file name
+      command: mv /home/apache-maven-3.0.5  /home/maven
+      
+    - name: chown change
+      file:
+        dest: "/home/maven"
+        recurse: yes
+        state: directory
+      
+    - name : Mysql jar copy
+      copy:
+        src: file/maven.sh
+        dest: "/etc/profile.d/"
