@@ -1,0 +1,24 @@
+- name: java
+  hosts: prod
+
+  tasks:
+    - name: wget  jdk
+      get_url:
+        url: http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/jdk-8u151-linux-x64.rpm
+        dest: /tmp/
+        headers: 'Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie'
+
+
+    - name: install java rpm from a local file
+      become: true
+      yum:
+        name: /tmp/jdk-8u151-linux-x64.rpm
+        state: present
+
+    - name: set javaa
+      become: true
+      lineinfile:
+        dest: /etc/environment
+        regexp: 'JAVA_HOME'
+        line: 'JAVA_HOME=/usr/java/jdk1.8.0_151'
+
